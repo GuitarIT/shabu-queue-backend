@@ -73,57 +73,17 @@ func CalculateEndTime(bookingTime string, durationMinutes int) string {
 	return endTime.Format("15:04:00")
 }
 
-// InitDB เชื่อมต่อ MySQL บนพอร์ต 3306 เท่านั้น และสร้างฐานข้อมูล/ตาราง/ข้อมูลเริ่มต้นอัตโนมัติ
+// InitDB เชื่อมต่อ MySQL ไปยังคลาวด์ฐานข้อมูล Aiven
+// InitDB เชื่อมต่อ MySQL อย่างปลอดภัยผ่านตัวแปรแวดล้อม
 func InitDB() error {
-	dbUser := getEnv("DB_USER", "root")
-	dbPass := os.Getenv("DB_PASS")
-	dbHost := getEnv("DB_HOST", "127.0.0.1")
-	// บังคับให้รันได้เฉพาะพอร์ต 3306 อย่างเดียวตามความต้องการของผู้ใช้งาน
-	dbPort := "3306"
-	dbName := getEnv("DB_NAME", "shabu_queue_db")
+	var err error
 
-	candidatePasswords := []string{dbPass}
-	if dbPass == "" {
-		candidatePasswords = []string{"", "root", "1234", "123456"}
-	}
+	// ดึงค่า URL ฐานข้อมูลจากที่ตั้งค่าไว้บน Render
+	dbURL := os.Getenv("DATABASE_URL")
 
-	var rootDB *sql.DB
-	var connectedPass string
-	var lastPingErr error
-
-	for _, pass := range candidatePasswords {
-		rootDSN := fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8mb4&parseTime=True&loc=Local", dbUser, pass, dbHost, dbPort)
-		dbConn, err := sql.Open("mysql", rootDSN)
-		if err != nil {
-			lastPingErr = err
-			continue
-		}
-		if err := dbConn.Ping(); err == nil {
-			rootDB = dbConn
-			connectedPass = pass
-			lastPingErr = nil
-			break
-		} else {
-			lastPingErr = err
-			_ = dbConn.Close()
-		}
-	}
-
-	if rootDB == nil {
-		return fmt.Errorf("ไม่สามารถเชื่อมต่อ MySQL พอร์ต 3306 ที่ %s:%s (กรุณาตรวจสอบว่าเปิด MySQL บนพอร์ต 3306 ใน XAMPP Control Panel แล้ว): %w", dbHost, dbPort, lastPingErr)
-	}
-	defer rootDB.Close()
-
-	_, err := rootDB.Exec(fmt.Sprintf("CREATE DATABASE IF NOT EXISTS `%s` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;", dbName))
+	DB, err = sql.Open("mysql", dbURL)
 	if err != nil {
-		return fmt.Errorf("ไม่สามารถสร้างฐานข้อมูล %s: %w", dbName, err)
-	}
-
-	// 2. เชื่อมต่อเข้าฐานข้อมูล shabu_queue_db บนพอร์ต 3306
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbUser, connectedPass, dbHost, dbPort, dbName)
-	DB, err = sql.Open("mysql", dsn)
-	if err != nil {
-		return fmt.Errorf("ไม่สามารถเชื่อมต่อฐานข้อมูล %s: %w", dbName, err)
+		return fmt.Errorf("ไม่สามารถเชื่อมต่อฐานข้อมูล: %w", err)
 	}
 
 	DB.SetMaxOpenConns(25)
@@ -144,7 +104,7 @@ func InitDB() error {
 		log.Printf("[WARN] การสร้างข้อมูลเริ่มต้นมีข้อผิดพลาด: %v", err)
 	}
 
-	log.Printf("[INFO] เชื่อมต่อฐานข้อมูล MySQL พอร์ต 3306 (%s) สำเร็จเรียบร้อย", dbName)
+	log.Printf("[INFO] เชื่อมต่อฐานข้อมูลออนไลน์สำเร็จเรียบร้อย")
 	return nil
 }
 
