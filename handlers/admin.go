@@ -96,6 +96,9 @@ func AdminDashboardHandler(w http.ResponseWriter, r *http.Request) {
 			b.QueueNumber = formatQueueCode(b.ID)
 			bookings = append(bookings, b)
 		}
+		if err := rows.Err(); err != nil {
+			log.Printf("error iterating admin bookings: %v", err)
+		}
 	}
 
 	announcements, _ := fetchLatestAnnouncements(50)

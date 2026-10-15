@@ -56,6 +56,9 @@ func fetchLatestAnnouncements(limit int) ([]models.Announcement, error) {
 		}
 		list = append(list, item)
 	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
 	return list, nil
 }
 
@@ -139,6 +142,9 @@ func CustomerDashboardHandler(w http.ResponseWriter, r *http.Request) {
 				activeBooking = &bCopy
 			}
 			history = append(history, b)
+		}
+		if err := rows.Err(); err != nil {
+			log.Printf("error iterating customer bookings: %v", err)
 		}
 	}
 
