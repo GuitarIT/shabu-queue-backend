@@ -1,0 +1,290 @@
+:root {
+    --shabu-primary: #d9381e;
+    --shabu-primary-dark: #b02812;
+    --shabu-secondary: #ff7b00;
+    --shabu-cream: #faf5f0;
+    --shabu-card-bg: #ffffff;
+    --shabu-text: #2d231e;
+    --shabu-radius: 1rem;
+}
+
+body {
+    font-family: 'Prompt', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--shabu-cream);
+    color: var(--shabu-text);
+    min-height: 100vh;
+}
+
+/* Navbar */
+.navbar-shabu {
+    background: linear-gradient(135deg, #c92a1d 0%, #e85d04 100%);
+    box-shadow: 0 4px 18px rgba(217, 56, 30, 0.25);
+}
+
+.brand-logo-circle {
+    width: 42px;
+    height: 42px;
+    background-color: #fff;
+    color: var(--shabu-primary);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.brand-logo-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.brand-logo-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-logo-card img {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: transparent;
+    box-shadow: 0 6px 20px rgba(217, 56, 30, 0.25);
+}
+
+/* กล่องเนื้อหากึ่งกลางหน้าจอ (Centered Stacked Layout) */
+.container-stacked {
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+.container-auth-centered {
+    max-width: 460px;
+    margin: 3.5rem auto;
+}
+
+/* Card Styling */
+.card-shabu {
+    border: none;
+    border-radius: var(--shabu-radius);
+    background: var(--shabu-card-bg);
+    box-shadow: 0 6px 22px rgba(45, 35, 30, 0.07);
+    margin-bottom: 1.75rem;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.card-shabu:hover {
+    box-shadow: 0 8px 26px rgba(45, 35, 30, 0.1);
+}
+
+/* Flash Alert Popup */
+.alert-popup {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.alert-popup.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+/* Stat Cards */
+.stat-card {
+    border-radius: var(--shabu-radius);
+    border: none;
+    padding: 1.15rem 1.1rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    background: #fff;
+}
+
+.stat-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+}
+
+/* Queue Ticket */
+.queue-ticket {
+    background: linear-gradient(135deg, #fff7ee 0%, #ffebd9 100%);
+    border: 2px dashed #f08c00;
+    border-radius: 1.25rem;
+    padding: 1.75rem;
+    margin-bottom: 1.75rem;
+    box-shadow: 0 6px 20px rgba(240, 140, 0, 0.12);
+}
+
+.queue-number-display {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--shabu-primary);
+    letter-spacing: 1px;
+    line-height: 1.1;
+}
+
+/* Status Badges */
+.badge-waiting {
+    background-color: #fff3cd !important;
+    color: #997404 !important;
+    border: 1px solid #ffe69c !important;
+    font-weight: 600;
+    padding: 0.45em 0.85em;
+    border-radius: 50rem;
+    display: inline-block;
+}
+
+.badge-seated {
+    background-color: #d1e7dd !important;
+    color: #0f5132 !important;
+    border: 1px solid #a3cfbb !important;
+    font-weight: 600;
+    padding: 0.45em 0.85em;
+    border-radius: 50rem;
+    display: inline-block;
+}
+
+.badge-completed {
+    background-color: #cff4fc !important;
+    color: #055160 !important;
+    border: 1px solid #9eeaf9 !important;
+    font-weight: 600;
+    padding: 0.45em 0.85em;
+    border-radius: 50rem;
+    display: inline-block;
+}
+
+.badge-cancelled {
+    background-color: #f8d7da !important;
+    color: #842029 !important;
+    border: 1px solid #f1aeb5 !important;
+    font-weight: 600;
+    padding: 0.45em 0.85em;
+    border-radius: 50rem;
+    display: inline-block;
+}
+
+/* Buttons */
+.btn-shabu {
+    background: linear-gradient(135deg, #d9381e 0%, #f48c06 100%);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 0.65rem;
+    padding: 0.65rem 1.4rem;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.btn-shabu:hover {
+    color: #fff;
+    opacity: 0.93;
+    transform: translateY(-1px);
+}
+
+/* Announcements & Promo banner */
+.promo-banner {
+    border-left: 5px solid var(--shabu-primary);
+    background: #fff;
+    border-radius: 0.85rem;
+    padding: 1.15rem 1.35rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+/* Fixed Time Slot Buttons */
+.slot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+    gap: 0.65rem;
+}
+
+.slot-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.75rem;
+    border: 1.5px solid #ffd8c2;
+    background: #fff;
+    color: var(--shabu-text);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+}
+
+.slot-btn:hover {
+    background-color: #fff0e6;
+    border-color: var(--shabu-primary);
+    color: var(--shabu-primary);
+    transform: translateY(-1px);
+}
+
+.slot-btn.active {
+    background: linear-gradient(135deg, #d9381e 0%, #f48c06 100%);
+    color: #fff;
+    border-color: var(--shabu-primary);
+    box-shadow: 0 4px 12px rgba(217, 56, 30, 0.3);
+    transform: scale(1.02);
+}
+
+.slot-btn:disabled,
+.slot-btn.disabled,
+.slot-btn[disabled] {
+    background-color: #f1f3f5 !important;
+    border-color: #dee2e6 !important;
+    color: #adb5bd !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+select option:disabled {
+    color: #adb5bd;
+    background-color: #f8f9fa;
+}
+
+/* Late Queue Highlight (ล่าช้าเกิน 5 นาที) */
+.queue-row-late {
+    background-color: #fff0f0 !important;
+    border-left: 5px solid #dc3545 !important;
+}
+
+.queue-row-late td {
+    background-color: #fff0f0 !important;
+}
+
+.badge-late-warning {
+    background-color: #dc3545;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.35em 0.75em;
+    border-radius: 50rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap !important;
+    animation: pulseWarning 1.8s infinite;
+}
+
+@keyframes pulseWarning {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.03); opacity: 0.88; }
+    100% { transform: scale(1); opacity: 1; }
+}

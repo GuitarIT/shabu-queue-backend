@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ - ร้านชาบูอ้วนกลม</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar (โลโก้และชื่อร้านอยู่ฝั่งซ้ายเหมือนหน้าอื่น) -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-shabu py-3">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="/">
+                <img src="/static/img/logo.png" alt="โลโก้ร้านชาบูอ้วนกลม" class="brand-logo-img">
+                <span>ร้านชาบูอ้วนกลม <small class="fw-normal opacity-75 d-none d-sm-inline">| ระบบจองคิวออนไลน์</small></span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <!-- กล่องแจ้งเตือน Flash Popup แสดง 5 วิแล้วปิดเอง มีปุ่มกากบาทปิดได้ -->
+        {{if .Error}}
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm container-auth-centered mb-3" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>{{.Error}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {{end}}
+
+        {{if .Success}}
+        <div class="alert alert-success alert-dismissible fade show shadow-sm container-auth-centered mb-3" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>{{.Success}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {{end}}
+        <script>
+            setTimeout(function () {
+                document.querySelectorAll('.alert').forEach(function (el) {
+                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(-10px)';
+                    setTimeout(function () {
+                        try { el.remove(); } catch(e) {}
+                    }, 600);
+                });
+            }, 5000);
+        </script>
+
+        <!-- กล่องเข้าสู่ระบบอยู่กึ่งกลางหน้าจอหลัก (Centered Login Box) -->
+        <div class="container-auth-centered my-4">
+            <div class="card card-shabu p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <div class="brand-logo-card mb-3">
+                        <img src="/static/img/logo.png" alt="โลโก้ร้านชาบูอ้วนกลม">
+                    </div>
+                    <h3 class="fw-bold mb-1">เข้าสู่ระบบ</h3>
+                    <p class="text-muted small mb-0">กรอกเบอร์โทรศัพท์และรหัสผ่านเพื่อเข้าใช้งาน</p>
+                </div>
+
+                <form method="POST" action="/login" novalidate>
+                    <div class="mb-3">
+                        <label for="phone_number" class="form-label fw-medium">เบอร์โทรศัพท์</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-telephone-fill text-danger"></i></span>
+                            <input type="text" class="form-control" id="phone_number" name="phone_number"
+                                   value="{{.PhoneNumber}}" placeholder="เช่น 0899999999" required autofocus>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="password" class="form-label fw-medium">รหัสผ่าน</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-lock-fill text-danger"></i></span>
+                            <input type="password" class="form-control" id="password" name="password"
+                                   placeholder="กรอกรหัสผ่านของคุณ" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-shabu w-100 py-2 mb-3">
+                        <i class="bi bi-box-arrow-in-right me-1"></i> เข้าสู่ระบบ
+                    </button>
+                </form>
+
+                <div class="text-center border-top pt-3">
+                    <span class="text-muted small">ยังไม่มีบัญชีลูกค้า?</span>
+                    <a href="/register" class="fw-semibold text-danger text-decoration-none ms-1">สมัครสมาชิกที่นี่</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
